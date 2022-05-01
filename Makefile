@@ -26,24 +26,19 @@ WARNINGS=                    \
    -Wno-parentheses          \
    -fdiagnostics-show-option
 
-test: base64-test-11 base64-test-17
-	base64-test-11
-	base64-test-17
+CXX?=g++
+CFLAGS?=--std=c++17
 
-base64-test-11: base64-11.o test-11.o
-	g++ base64-11.o test-11.o -o $@
+SOURCES=base64.cpp base64.h
 
-base64-test-17: base64-17.o test-17.o
-	g++ base64-17.o test-17.o -o $@
+test: base64-test
+	./$<
 
-base64-11.o: base64.cpp base64.h
-	g++ -std=c++11 $(WARNINGS) -c base64.cpp -o base64-11.o
+base64-test: base64.o test.o
+	$(CXX) $(CFLAGS) $^ -o $@
 
-base64-17.o: base64.cpp base64.h
-	g++ -std=c++17 $(WARNINGS) -c base64.cpp -o base64-17.o
+base64.o: $(SOURCES)
+	$(CXX) $(CFLAGS) $(WARNINGS) -c $< -o $@
 
-test-11.o: test.cpp
-	g++ -std=c++11 $(WARNINGS) -c test.cpp -o test-11.o
-
-test-17.o: test.cpp
-	g++ -std=c++17 $(WARNINGS) -c test.cpp -o test-17.o
+test.o: test.cpp
+	$(CXX) $(CFLAGS) $(WARNINGS) -c $^ -o $@

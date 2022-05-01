@@ -1,5 +1,6 @@
 *.swp
 test-base64
+base64-test
 .wsjcpp/*
 *.o
 *.exe
