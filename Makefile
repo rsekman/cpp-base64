@@ -26,7 +26,7 @@ WARNINGS=                    \
    -Wno-parentheses          \
    -fdiagnostics-show-option
 
-CXX?=g++
+CXX=g++
 CFLAGS?=--std=c++17
 
 SOURCES=base64.cpp base64.h
@@ -38,7 +38,11 @@ base64-test: base64.o test.o
 	$(CXX) $(CFLAGS) $^ -o $@
 
 base64.o: $(SOURCES)
-	$(CXX) $(CFLAGS) $(WARNINGS) -c $< -o $@
+	$(CXX) $(CFLAGS) $(WARNINGS) -fPIC -c $< -o $@
 
 test.o: test.cpp
 	$(CXX) $(CFLAGS) $(WARNINGS) -c $^ -o $@
+
+clean:
+	rm -f *.o
+	rm -f base64-test*
